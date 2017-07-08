@@ -21,3 +21,15 @@ E:\prodject\Game1\Game1\bin\Windows\x86\Debug\SharpDX.Direct3D9.xml
 E:\prodject\Game1\Game1\obj\x86\Debug\Game1.csprojResolveAssemblyReference.cache
 E:\prodject\Game1\Game1\obj\x86\Debug\Game1.exe
 E:\prodject\Game1\Game1\obj\x86\Debug\Game1.pdb
+E:\prodject\Game1\Game1\bin\Windows\x86\Debug\Content\player2.xnb
+E:\prodject\Game1\Game1\bin\Windows\x86\Debug\Content\tilemap.xnb
+E:\prodject\Game1\Game1\bin\Windows\x86\Debug\Content\tilemap.png
+E:\prodject\Game1\Game1\bin\Windows\x86\Debug\Content\barash.xnb
+E:\prodject\Game1\Game1\bin\Windows\x86\Debug\Content\fon.xnb
+E:\prodject\Game1\Game1\bin\Windows\x86\Debug\Content\player.xnb
+E:\prodject\Game1\Game1\bin\Windows\x86\Debug\Content\redball.xnb
+E:\prodject\Game1\Game1\bin\Windows\x86\Debug\Content\player2.png
+E:\prodject\Game1\Game1\bin\Windows\x86\Debug\Content\dragon.xnb
+E:\prodject\Game1\Game1\bin\Windows\x86\Debug\Content\mob.xnb
+E:\prodject\Game1\Game1\bin\Windows\x86\Debug\Content\mob2.xnb
+E:\prodject\Game1\Game1\bin\Windows\x86\Debug\Content\rip.xnb

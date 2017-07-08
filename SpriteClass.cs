@@ -9,6 +9,7 @@ namespace Game1
 {
     public class Sprite
     {
+        
         public Sprite(GraphicsDevice graphicsDevice, string textureName, float scale)
         {
             this.scale = scale;
@@ -36,6 +37,7 @@ namespace Game1
         {
             get;
         }
+
 
         public float x
         {
