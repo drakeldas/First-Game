@@ -67,20 +67,22 @@ namespace Game1
             Ball = new Sprite(GraphicsDevice, "Content/redball.png", (float)0.2);
             this.intro = Content.Load<Song>("intro");
             MediaPlayer.Play(intro);
+
             var sheepSprite = new SpriteInfo
 			{
 				Texture = Content.Load<Texture2D>("barash"),
 				FrameCount = 96,
-				TimeToFrame = TimeSpan.FromMilliseconds(100),
+				TimeToFrame = TimeSpan.FromMilliseconds(150),
 				FrameWidth = 48,
 				FrameHeight = 48,
 				FramesInRow = 12,
 			};
+
             gameObjects = new HashSet<GameObject>();
             gameObjects.Add(new Sheep(sheepSprite)
 			{
-				Position = new Vector2(1400, 780),
-				Velocity = new Vector2(100f, 0f),
+				Position = new Vector2(1400, 790),
+				Velocity = new Vector2(-0.01f, 0f),
 			});
 
             Player2.x = 30;
