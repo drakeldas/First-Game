@@ -82,7 +82,7 @@ namespace Game1
             gameObjects.Add(new Sheep(sheepSprite)
 			{
 				Position = new Vector2(1400, 790),
-				Velocity = new Vector2(-0.01f, 0f),
+				Velocity = new Vector2(0.05f, 0f),
 			});
 
             Player2.x = 30;

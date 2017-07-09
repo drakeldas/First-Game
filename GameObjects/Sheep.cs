@@ -48,10 +48,10 @@ namespace Game1.GameObjects
             
             while (elapsedTime >= spriteInfo.TimeToFrame)
             {
-                //if (Position.X <= 0 || Position.X >= 1500)
-                //{
-                //   Velocity.X = -Velocity.X;
-                //}
+                if (Position.X <= 0 || Position.X >= 1500)
+                {
+                   Velocity = -Velocity;
+                }
 
                 if (Velocity.X > 0)
                 {
@@ -66,7 +66,7 @@ namespace Game1.GameObjects
         }
         public override void Draw(SpriteBatch spriteBatch)
         {
-            var sourceRect = new Rectangle((currentFrame % spriteInfo.FramesInRow) * spriteInfo.FrameWidth, (currentFrame / spriteInfo.FramesInRow) * spriteInfo.FrameHeight, spriteInfo.FrameWidth - 1, spriteInfo.FrameHeight - 1);
+            var sourceRect = new Rectangle((currentFrame % spriteInfo.FramesInRow) * spriteInfo.FrameWidth, (currentFrame / spriteInfo.FramesInRow) * spriteInfo.FrameHeight, spriteInfo.FrameWidth, spriteInfo.FrameHeight);
             spriteBatch.Draw(spriteInfo.Texture, Position, sourceRect, Color.White, 0f, origin, 2.75f, SpriteEffects.None, 0f);
         }
         public override Vector2 Center
