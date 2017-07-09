@@ -33,3 +33,6 @@ E:\prodject\Game1\Game1\bin\Windows\x86\Debug\Content\dragon.xnb
 E:\prodject\Game1\Game1\bin\Windows\x86\Debug\Content\mob.xnb
 E:\prodject\Game1\Game1\bin\Windows\x86\Debug\Content\mob2.xnb
 E:\prodject\Game1\Game1\bin\Windows\x86\Debug\Content\rip.xnb
+D:\First-Game\obj\x86\Debug\Game1.exe
+D:\First-Game\obj\x86\Debug\Game1.pdb
+D:\First-Game\obj\x86\Debug\Game1.csprojResolveAssemblyReference.cache
