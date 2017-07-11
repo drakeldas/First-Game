@@ -23,26 +23,32 @@ namespace Game1
                 }
             }
         }
-        public void Update(float elapsedTime)
+        public void Update(float elapsedTime, Sprite player)
         {
-            if (Math.Abs(this.firstx - this.x) <300 && !pass)
-            {
-                this.x += this.dX * elapsedTime;
-                if (Math.Abs(this.firstx - this.x) > 250) { pass = true; }
-            }
-            if(Math.Abs(this.firstx - this.x) < 300 && pass)
-            {
-                this.x -= this.dX * elapsedTime;
-                if (Math.Abs(this.firstx - this.x) < 50) { pass = false; }
-            }
+            
+            if( (player.x-this.x- this.texture.Width * this.scale * HITBOXSCALE / 2) < 0) { this.x -= this.dX * elapsedTime; }
+            if ((player.x - this.x+ this.texture.Width * this.scale * HITBOXSCALE / 2) > 0) { this.x += this.dX * elapsedTime; }
+        }
+        public void Update(float elapsedTime, Players player)
+        {
+
+            if ((player.x - this.x - this.texture.Width * this.scale * HITBOXSCALE / 2) < 0) { this.x -= this.dX * elapsedTime; }
+            if ((player.x - this.x + this.texture.Width * this.scale * HITBOXSCALE / 2) > 0) { this.x += this.dX * elapsedTime; }
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            var FramMob = new Rectangle(this.framX, this.framY, this.framDx, this.framDy);
-            
             Vector2 spritePosition = new Vector2(this.x, this.y);
-            spriteBatch.Draw(texture, spritePosition, FramMob, Color.White, this.angle, new Vector2(texture.Width / 2, texture.Height / 2), new Vector2(scale, scale), SpriteEffects.None, 0f);
+
+            if (this.framDx == 0 || this.framDy == 0)
+            {
+                spriteBatch.Draw(texture, spritePosition, null, Color.White, this.angle, new Vector2(texture.Width / 2, texture.Height / 2), new Vector2(scale, scale), SpriteEffects.None, 0f);
+            }
+            else
+            {
+                var FramMob = new Rectangle(this.framX, this.framY, this.framDx, this.framDy);
+                spriteBatch.Draw(texture, spritePosition, FramMob, Color.White, this.angle, new Vector2(texture.Width / 2, texture.Height / 2), new Vector2(scale, scale), SpriteEffects.None, 0f);
+            }
         }
         public bool RectangleCollision(Sprite otherSprite)
         {
@@ -52,6 +58,15 @@ namespace Game1
             if (this.y - this.texture.Height * this.scale * HITBOXSCALE / 2 > otherSprite.y + otherSprite.texture.Height * otherSprite.scale / 2) return false;
             return true;
         }
+        public bool RectangleCollision(Players otherSprite)
+        {
+            if (this.x + this.texture.Width * this.scale * HITBOXSCALE / 2 < otherSprite.x - otherSprite.texture.Width * otherSprite.scale / 2) return false;
+            if (this.y + this.texture.Height * this.scale * HITBOXSCALE / 2 < otherSprite.y - otherSprite.texture.Height * otherSprite.scale / 2) return false;
+            if (this.x - this.texture.Width * this.scale * HITBOXSCALE / 2 > otherSprite.x + otherSprite.texture.Width * otherSprite.scale / 2) return false;
+            if (this.y - this.texture.Height * this.scale * HITBOXSCALE / 2 > otherSprite.y + otherSprite.texture.Height * otherSprite.scale / 2) return false;
+            return true;
+        }
+
         public Texture2D texture
         {
             get;
