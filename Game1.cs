@@ -6,6 +6,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework.Media;
+using Microsoft.Xna.Framework.Audio;
+
 namespace Game1
 {
    
@@ -23,7 +26,13 @@ namespace Game1
         bool gameOver;
         bool BallRun;
         bool Lifmob;
-        
+        Song intro;
+        SoundEffect retry;
+        SoundEffect lvlup;
+        SoundEffect shot;
+        int score;
+        int highscore;
+
         float gravitySpeed;
         float playerSpeedX;
         float playerJumpY;
@@ -48,8 +57,7 @@ namespace Game1
             graphics.PreferredBackBufferWidth = screenWidth;  
             graphics.PreferredBackBufferHeight = screenHeight;  
         }
-
-       
+        
         protected override void Initialize()
         {
             k = 0;
@@ -64,6 +72,8 @@ namespace Game1
             BallRun = false;
             Lifmob = true;
             MobSpeed = 300;
+            score = 0;
+            highscore = 0;
             base.Initialize();
         }
        
@@ -78,10 +88,14 @@ namespace Game1
             Mob1 = new Mobs(GraphicsDevice, "Content/mob.png", 0.4f);
             Mob2 = new Mobs(GraphicsDevice, "Content/mob2.png", 0.4f);
             Rip = new Sprite(GraphicsDevice, "Content/rip.png", 0.4f);
-
+            this.intro = Content.Load<Song>("intro");
+            this.retry = Content.Load<SoundEffect>("retry");
+            this.lvlup = Content.Load<SoundEffect>("lvlup");
+            this.shot = Content.Load<SoundEffect>("shot");
             startGameSplash = Texture2D.FromStream(GraphicsDevice, File.Open("Content/start-splash.png", FileMode.Open));
             scoreFont = Content.Load<SpriteFont>("Score");
             stateFont = Content.Load<SpriteFont>("GameState");
+            MediaPlayer.Play(intro);
 
             Player2.x = 30;
             Player2.y = 690;
@@ -111,7 +125,7 @@ namespace Game1
 
             if (Player2.exp == 10*Player2.lvl)
             {
-                Player2.exp = 0; Player2.lvl++; Mob2.dX += MobSpeed / 5; Mob1.dX += MobSpeed / 5;
+                Player2.exp = 0; Player2.lvl++; lvlup.Play(); Mob2.dX += MobSpeed / 5; Mob1.dX += MobSpeed / 5;
             }
             if (Player2.exp > 10 * Player2.lvl) { Player2.exp = 0; }
 
@@ -138,15 +152,19 @@ namespace Game1
             {
                 Mob2.x = 0;
                 Mob1.x = 1500;
+                Mob1.dX = MobSpeed;
+                Mob2.dX = MobSpeed;
+                Player2.exp = 0;
+                Player2.lvl = 0;
+                score = 0;
+                retry.Play();
                 StartGame();
                 gameOver = false;
                 
             }
 
+            if (gameStarted) {
 
-
-            if (gameStarted) { 
-            
                 if (!gameOver)
                 { 
                     Player2.Update(elapsedTime);
@@ -163,9 +181,7 @@ namespace Game1
 
             void KeyboardHandler()
                 {
-
-
-
+                    
                     if (keyboardState.IsKeyDown(Keys.A))
                     {
                         Player2.x -= playerSpeedX * gameTime.ElapsedGameTime.Milliseconds / 1000f;
@@ -214,14 +230,7 @@ namespace Game1
                     if (Player2.y != 690) { spaceDown = true; }
                     if (Player2.y == 691) { spaceDown = false; Player2.dY = 0; }
 
-
-
-
-
-
-
-
-
+                    
                     if (keyboardState.IsKeyDown(Keys.Left)) Player2.dX = -playerSpeedX;
                     else if (keyboardState.IsKeyDown(Keys.Right)) Player2.dX = playerSpeedX;
                     else Player2.dX = 0;
@@ -262,7 +271,6 @@ namespace Game1
             Fon.Draw(spriteBatch);
 
             
-            
             for (int i = 0; i < 8; i++)
             {
                 Tilemap.framX = 256;
@@ -291,6 +299,12 @@ namespace Game1
                 Rip.x = Player2.x;
                 Rip.y = Player2.y;
                 Rip.Draw(spriteBatch);
+                String titleGameOver = "GAME OVER";
+                String titleAgain = "Press Enter to start again";
+                String titleExit = "Press Esc to exit";
+                spriteBatch.DrawString(stateFont, titleGameOver, new Vector2(500, 275), Color.Red, 0f, Vector2.Zero, 0.9f, SpriteEffects.None, 1f);
+                spriteBatch.DrawString(stateFont, titleAgain, new Vector2(575, 390), Color.Red, 0f, Vector2.Zero, 0.35f, SpriteEffects.None, 1f);
+                spriteBatch.DrawString(stateFont, titleExit, new Vector2(635, 425), Color.Red, 0f, Vector2.Zero, 0.35f, SpriteEffects.None, 1f);
             }
 
 
@@ -299,9 +313,7 @@ namespace Game1
                Ball.Draw(spriteBatch);
             }
             
-
             
-
             if (!Mob1.RectangleCollision(Ball) && Lifmob)
             {
                 Mob1.Draw(spriteBatch); 
@@ -310,8 +322,12 @@ namespace Game1
             {
                 Lifmob = false;
                 Mob1.x = Mob1.firstx;
+                shot.Play();
                 Player2.exp++;
-                
+                score++;
+                if (score > highscore)
+                { highscore = score; }
+
             }
             if (!Mob2.RectangleCollision(Ball) && !Lifmob)
             {
@@ -321,7 +337,11 @@ namespace Game1
             {
                 Lifmob = true;
                 Mob2.x = Mob2.firstx;
+                shot.Play();
                 Player2.exp++;
+                score++;
+                if (score > highscore)
+                { highscore = score; }
             }
 
             if (Player2.exp > 10 * Player2.lvl) { Player2.exp = 0; }
@@ -345,12 +365,16 @@ namespace Game1
             if (gameStarted)
             {
 
-                String title=Player2.lvl.ToString()+"lvl";
-                String title2 = "press the button F to attack";
-                spriteBatch.DrawString(stateFont, title, new Vector2(0,0), Color.Red);
+                String titleLevel= "Level "+Player2.lvl.ToString();
+                String titlePlay = "Press the button F to attack";
+                String titleScore = string.Format("Score: {0:D3}", score);
+                String titleHighS = string.Format("HighScore: {0:D3}", highscore);
                 
-                spriteBatch.DrawString(stateFont, title2, new Vector2(0, 100), Color.Red, 0f, Vector2.Zero, 0.2f, SpriteEffects.None, 1f);
-             }
+                spriteBatch.DrawString(stateFont, titleLevel, new Vector2(10,0), Color.Red);
+                spriteBatch.DrawString(stateFont, titlePlay, new Vector2(10, 100), Color.Red, 0f, Vector2.Zero, 0.2f, SpriteEffects.None, 1f);
+                spriteBatch.DrawString(stateFont, titleScore, new Vector2(1125, 0), Color.Red, 0f, Vector2.Zero, 0.5f, SpriteEffects.None, 1f);
+                spriteBatch.DrawString(stateFont, titleHighS, new Vector2(1125, 50), Color.Red, 0f, Vector2.Zero, 0.5f, SpriteEffects.None, 1f);
+            }
 
 
             spriteBatch.End();

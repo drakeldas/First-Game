@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>E:/prodject/Game1/Game1/Content/rip.png</SourceFile>
-  <SourceTime>2017-07-08T20:26:34.7634747+03:00</SourceTime>
-  <DestFile>E:/prodject/Game1/Game1/Content/bin/Windows/rip.xnb</DestFile>
-  <DestTime>2017-07-08T20:46:30.6156804+03:00</DestTime>
+  <SourceFile>C:/Users/Днс/Documents/First-Game/Content/rip.png</SourceFile>
+  <SourceTime>2017-07-11T06:38:36+04:00</SourceTime>
+  <DestFile>C:/Users/Днс/Documents/First-Game/Content/bin/Windows/rip.xnb</DestFile>
+  <DestTime>2017-07-13T20:32:56.8445538+04:00</DestTime>
   <Importer>TextureImporter</Importer>
-  <ImporterTime>2017-03-01T18:05:36+03:00</ImporterTime>
+  <ImporterTime>2017-03-01T19:05:36+04:00</ImporterTime>
   <Processor>TextureProcessor</Processor>
-  <ProcessorTime>2017-03-01T18:05:36+03:00</ProcessorTime>
+  <ProcessorTime>2017-03-01T19:05:36+04:00</ProcessorTime>
   <Parameters>
     <Key>ColorKeyColor</Key>
     <Value>255,0,255,255</Value>
