@@ -25,13 +25,13 @@ namespace Game1
         }
         public void Update(float elapsedTime, Sprite player)
         {
-            
-            if( (player.x-this.x- this.texture.Width * this.scale * HITBOXSCALE / 2) < 0) { this.x -= this.dX * elapsedTime; }
+            if ( (player.x-this.x- this.texture.Width * this.scale * HITBOXSCALE / 2) < 0) { this.x -= this.dX * elapsedTime; }
             if ((player.x - this.x+ this.texture.Width * this.scale * HITBOXSCALE / 2) > 0) { this.x += this.dX * elapsedTime; }
         }
         public void Update(float elapsedTime, Players player)
         {
-
+            if (this.x < -50) { this.x = -50; }
+            if (this.x > 1550) { this.x = 1550; }
             if ((player.x - this.x - this.texture.Width * this.scale * HITBOXSCALE / 2) < 0) { this.x -= this.dX * elapsedTime; }
             if ((player.x - this.x + this.texture.Width * this.scale * HITBOXSCALE / 2) > 0) { this.x += this.dX * elapsedTime; }
         }

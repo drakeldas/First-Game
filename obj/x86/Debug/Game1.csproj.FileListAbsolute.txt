@@ -125,3 +125,6 @@ C:\Users\mak-p\Desktop\First-Game-master\obj\x86\Debug\Game1.pdb
 C:\Users\mak-p\Desktop\First-Game-master\bin\Windows\x86\Debug\Content\fireball.xnb
 C:\Users\mak-p\Desktop\First-Game-master\bin\Windows\x86\Debug\Content\player_1.xnb
 C:\Users\mak-p\Desktop\First-Game-master\bin\Windows\x86\Debug\Content\player_2.xnb
+C:\Users\Днс\Documents\First-Game\bin\Windows\x86\Debug\Content\fireball.xnb
+C:\Users\Днс\Documents\First-Game\bin\Windows\x86\Debug\Content\player_1.xnb
+C:\Users\Днс\Documents\First-Game\bin\Windows\x86\Debug\Content\player_2.xnb

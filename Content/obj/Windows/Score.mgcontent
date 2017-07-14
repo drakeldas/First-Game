@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>C:/Users/mak-p/Desktop/First-Game-master/Content/Score.spritefont</SourceFile>
-  <SourceTime>2017-07-13T09:39:48+03:00</SourceTime>
-  <DestFile>C:/Users/mak-p/Desktop/First-Game-master/Content/bin/Windows/Score.xnb</DestFile>
-  <DestTime>2017-07-14T19:23:23.9976507+03:00</DestTime>
+  <SourceFile>C:/Users/Днс/Documents/First-Game/Content/Score.spritefont</SourceFile>
+  <SourceTime>2017-07-11T06:38:36+04:00</SourceTime>
+  <DestFile>C:/Users/Днс/Documents/First-Game/Content/bin/Windows/Score.xnb</DestFile>
+  <DestTime>2017-07-14T22:21:05.5248684+04:00</DestTime>
   <Importer>FontDescriptionImporter</Importer>
-  <ImporterTime>2017-03-01T18:05:36+03:00</ImporterTime>
+  <ImporterTime>2017-03-01T19:05:36+04:00</ImporterTime>
   <Processor>FontDescriptionProcessor</Processor>
-  <ProcessorTime>2017-03-01T18:05:36+03:00</ProcessorTime>
+  <ProcessorTime>2017-03-01T19:05:36+04:00</ProcessorTime>
   <Parameters>
     <Key>PremultiplyAlpha</Key>
     <Value>True</Value>

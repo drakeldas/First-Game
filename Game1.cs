@@ -104,12 +104,12 @@ namespace Game1
             MediaPlayer.Play(intro);
 
             
-            Mob1.firstx = screenWidth; ;
+            Mob1.firstx = screenWidth+600; ;
             Mob1.firsty = 605;
             Mob1.x = 1300;
             Mob1.y = 605;
             Mob1.dX = MobSpeed;
-            Mob2.firstx = 0;
+            Mob2.firstx = -600;
             Mob2.firsty = 605;
             Mob2.x = 0;
             Mob2.y = 605;
@@ -129,7 +129,7 @@ namespace Game1
             if (Player2.lvl >= 2) { Ball.texture = Fire; }
             if (Player2.lvl >= 3) { Player2.texture = Player_2; Player.texture = Player_1; Player.scale = 0.2f; Player2.scale = 0.2f; }
             //условие набора уровня
-            if (Player2.exp == 10*Player2.lvl)
+            if (Player2.exp == 10 * Player2.lvl)
             {
                 Player2.exp = 0; Player2.lvl++; lvlup.Play(); Mob2.dX += MobSpeed / 5; Mob1.dX += MobSpeed / 5; damage += Player2.lvl * 5;
             }
@@ -161,6 +161,9 @@ namespace Game1
                 Mob1.x = screenWidth; ;
                 Mob1.dX = MobSpeed;
                 Mob2.dX = MobSpeed;
+                Player2 = new Players(GraphicsDevice, "Content/player.png", 1);
+                Player = new Sprite(GraphicsDevice, "Content/player2.png", 1);
+                Ball = new Sprite(GraphicsDevice, "Content/redball.png", (float)0.2);
                 Player2.exp = 0;
                 Player2.lvl = 1;
                 score = 0;
@@ -238,6 +241,9 @@ namespace Game1
                 String titleGameOver = "GAME OVER";
                 String titleAgain = "Press Enter to start again";
                 String titleExit = "Press Esc to exit";
+                BallRun = false;
+                Ball.dX = 0;
+                Ball.y = 1000;
                 spriteBatch.DrawString(stateFont, titleGameOver, new Vector2(500, 275), Color.Red, 0f, Vector2.Zero, 0.9f, SpriteEffects.None, 1f);
                 spriteBatch.DrawString(stateFont, titleAgain, new Vector2(575, 390), Color.Red, 0f, Vector2.Zero, 0.35f, SpriteEffects.None, 1f);
                 spriteBatch.DrawString(stateFont, titleExit, new Vector2(635, 425), Color.Red, 0f, Vector2.Zero, 0.35f, SpriteEffects.None, 1f);
