@@ -54,6 +54,7 @@ namespace Game1
         public Texture2D texture
         {
             get;
+            set;
         }
 
 

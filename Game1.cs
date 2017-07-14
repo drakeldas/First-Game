@@ -19,13 +19,12 @@ namespace Game1
         SpriteBatch spriteBatch;
         Texture2D startGameSplash;
         Sprite Tilemap;
-        int k;
-        int fraimWidth = 0;
-        bool spaceDown;
-        bool gameStarted;
-        bool gameOver;
-        bool BallRun;
-        bool Lifmob;
+        bool spaceDown; //прыжок
+        bool gameStarted; // начало игры
+        bool gameOver; // конец игры
+        bool BallRun; //шар
+        bool Lifmob; // жизнь моба
+        double damage;
         Song intro;
         SoundEffect retry;
         SoundEffect lvlup;
@@ -33,12 +32,12 @@ namespace Game1
         int score;
         int highscore;
 
-        float gravitySpeed;
-        float playerSpeedX;
-        float playerJumpY;
-        float ballSpeedX;
-        float ballCast;
-        int MobSpeed;
+        float gravitySpeed; //гравитация
+        float playerSpeedX; // скорость игрока
+        float playerJumpY;// скорость прыжка
+        float ballSpeedX;// скорость шара
+        float ballCast;// поворот шара
+        int MobSpeed;// скорость мобов
         Sprite Player;
         Players Player2;
         Sprite Ball;
@@ -46,10 +45,13 @@ namespace Game1
         Sprite Rip;
         Mobs Mob1;
         Mobs Mob2;
+        Texture2D Fire;
+        Texture2D Player_1;
+        Texture2D Player_2;
         SpriteFont scoreFont;
         SpriteFont stateFont;
-        int screenWidth=1500;
-        int screenHeight=900;
+        int screenWidth = 1500;
+        int screenHeight = 900;
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -60,7 +62,7 @@ namespace Game1
         
         protected override void Initialize()
         {
-            k = 0;
+            
             this.IsMouseVisible = true;
             spaceDown = false;
             gameStarted = false;
@@ -74,6 +76,7 @@ namespace Game1
             MobSpeed = 300;
             score = 0;
             highscore = 0;
+            damage = 30;
             base.Initialize();
         }
        
@@ -92,16 +95,16 @@ namespace Game1
             this.retry = Content.Load<SoundEffect>("retry");
             this.lvlup = Content.Load<SoundEffect>("lvlup");
             this.shot = Content.Load<SoundEffect>("shot");
+            Fire = Content.Load<Texture2D>("fireball");
+            Player_1 = Content.Load<Texture2D>("player_1");
+            Player_2 = Content.Load<Texture2D>("player_2");
             startGameSplash = Texture2D.FromStream(GraphicsDevice, File.Open("Content/start-splash.png", FileMode.Open));
             scoreFont = Content.Load<SpriteFont>("Score");
             stateFont = Content.Load<SpriteFont>("GameState");
             MediaPlayer.Play(intro);
 
-            Player2.x = 30;
-            Player2.y = 690;
-            Player.x = 30;
-            Player.y = 690;
-            Mob1.firstx = 1500;
+            
+            Mob1.firstx = screenWidth; ;
             Mob1.firsty = 605;
             Mob1.x = 1300;
             Mob1.y = 605;
@@ -122,10 +125,13 @@ namespace Game1
         
         protected override void Update(GameTime gameTime)
         {
-
+            //смена спрайтов с уровнем
+            if (Player2.lvl >= 2) { Ball.texture = Fire; }
+            if (Player2.lvl >= 3) { Player2.texture = Player_2; Player.texture = Player_1; Player.scale = 0.2f; Player2.scale = 0.2f; }
+            //условие набора уровня
             if (Player2.exp == 10*Player2.lvl)
             {
-                Player2.exp = 0; Player2.lvl++; lvlup.Play(); Mob2.dX += MobSpeed / 5; Mob1.dX += MobSpeed / 5;
+                Player2.exp = 0; Player2.lvl++; lvlup.Play(); Mob2.dX += MobSpeed / 5; Mob1.dX += MobSpeed / 5; damage += Player2.lvl * 5;
             }
             if (Player2.exp > 10 * Player2.lvl) { Player2.exp = 0; }
 
@@ -150,25 +156,27 @@ namespace Game1
             }
             if (gameOver && keyboardState.IsKeyDown(Keys.Enter))
             {
+                Lifmob = true;
                 Mob2.x = 0;
-                Mob1.x = 1500;
+                Mob1.x = screenWidth; ;
                 Mob1.dX = MobSpeed;
                 Mob2.dX = MobSpeed;
                 Player2.exp = 0;
-                Player2.lvl = 0;
+                Player2.lvl = 1;
                 score = 0;
                 retry.Play();
                 StartGame();
                 gameOver = false;
                 
             }
-
-            if (gameStarted) {
+            //обновление координат спрайтов
+            if (gameStarted)
+            {
 
                 if (!gameOver)
                 { 
                     Player2.Update(elapsedTime);
-                    KeyboardHandler();
+                    KeyboardHandler(Player2, gameTime);
                 }
                
 
@@ -179,83 +187,10 @@ namespace Game1
                 }
                 if(!Lifmob) Mob2.Update(elapsedTime, Player2);
 
-            void KeyboardHandler()
-                {
-                    
-                    if (keyboardState.IsKeyDown(Keys.A))
-                    {
-                        Player2.x -= playerSpeedX * gameTime.ElapsedGameTime.Milliseconds / 1000f;
-                        ballCast = -1;
-                    }
-                    if (keyboardState.IsKeyDown(Keys.D))
-                    {
-                        Player2.x += playerSpeedX * gameTime.ElapsedGameTime.Milliseconds / 1000f;
-                        ballCast = 1;
-                    }
-
-                    if (keyboardState.IsKeyDown(Keys.F))
-                    {
-                        if (!BallRun)
-                        {
-                            Ball.firstx = Player2.x;
-                            Ball.y = Player2.y;
-                            BallRun = true;
-                            Ball.dX = ballCast * ballSpeedX;
-                        }
-                    }
-
-                    if (Math.Abs(Ball.firstx - Ball.x) > 400 || !keyboardState.IsKeyDown(Keys.F))
-                    {
-                        BallRun = false;
-                        Ball.x = Player2.x;
-                        Ball.y = 1000;
-                    }
-
-
-                    if (Player2.y < 690)
-                    {
-                        Player2.dY += gravitySpeed * playerJumpY;
-                    }
-                    if (keyboardState.IsKeyDown(Keys.Space))
-                    {
-
-                        if (!spaceDown && Player2.y >= screenHeight * HITBOXSCALE - 1) { spaceDown = true; Player2.dY = -playerJumpY; }
-
-
-                    }
-
-                    else { spaceDown = false; if (Player2.y < 550) { Player2.dY = playerJumpY; } }
-
-
-                    if (Player2.y != 690) { spaceDown = true; }
-                    if (Player2.y == 691) { spaceDown = false; Player2.dY = 0; }
-
-                    
-                    if (keyboardState.IsKeyDown(Keys.Left)) Player2.dX = -playerSpeedX;
-                    else if (keyboardState.IsKeyDown(Keys.Right)) Player2.dX = playerSpeedX;
-                    else Player2.dX = 0;
-
-                    if (Player2.y > 690)
-                    {
-                        Player2.dY = 0;
-                        Player2.y = 690;
-                    }
-
-                    if (Player2.x > screenWidth)
-                    {
-                        Player2.x = screenWidth - 60;
-                        Player2.dX = 0;
-                    }
-                    if (Player2.x < 0)
-                    {
-                        Player2.x = 60;
-                        Player2.dX = 0;
-                    }
-                }
+                
         }
-            if (Player2.RectangleCollision(Mob1)) { gameOver = true; }
-
-            if (Player2.RectangleCollision(Mob1)) { gameOver = true; }
+            if (Player2.RectangleCollision(Mob1) && Lifmob) { gameOver = true; }
+            if (Player2.RectangleCollision(Mob2) && !Lifmob) { gameOver = true; }
             if (Player2.health < 0) { gameOver = true; Player2.health = 100 * Player2.lvl; }
             base.Update(gameTime);
             
@@ -270,7 +205,7 @@ namespace Game1
             spriteBatch.Begin();
             Fon.Draw(spriteBatch);
 
-            
+            //отрисовка нижней платформы
             for (int i = 0; i < 8; i++)
             {
                 Tilemap.framX = 256;
@@ -281,6 +216,7 @@ namespace Game1
                 Tilemap.y = 920;
                 Tilemap.Draw(spriteBatch);
             }
+            //отрисовка персонажа
             if (!gameOver)
             {
                 if (keyboardState.IsKeyDown(Keys.A) || ballCast == -1)
@@ -307,21 +243,22 @@ namespace Game1
                 spriteBatch.DrawString(stateFont, titleExit, new Vector2(635, 425), Color.Red, 0f, Vector2.Zero, 0.35f, SpriteEffects.None, 1f);
             }
 
-
+            //отрисовка спрайта шара
             if (BallRun)
             {
                Ball.Draw(spriteBatch);
             }
-            
-            
-            if (!Mob1.RectangleCollision(Ball) && Lifmob)
+
+            //отрисовка мобов
+            if (Lifmob)
             {
+                Mob2.x = Mob2.firstx;
                 Mob1.Draw(spriteBatch); 
             }
             if(Mob1.RectangleCollision(Ball))
             {
+                BallRun = false;
                 Lifmob = false;
-                Mob1.x = Mob1.firstx;
                 shot.Play();
                 Player2.exp++;
                 score++;
@@ -329,14 +266,15 @@ namespace Game1
                 { highscore = score; }
 
             }
-            if (!Mob2.RectangleCollision(Ball) && !Lifmob)
+            if (!Lifmob)
             {
+                Mob1.x = Mob1.firstx;
                 Mob2.Draw(spriteBatch);
             }
             if (Mob2.RectangleCollision(Ball))
             {
+                BallRun = false;
                 Lifmob = true;
-                Mob2.x = Mob2.firstx;
                 shot.Play();
                 Player2.exp++;
                 score++;
@@ -344,8 +282,8 @@ namespace Game1
                 { highscore = score; }
             }
 
-            if (Player2.exp > 10 * Player2.lvl) { Player2.exp = 0; }
 
+            //начальная заставка
             if (!gameStarted)
             {
 
@@ -386,7 +324,79 @@ namespace Game1
             Player2.x = 30;
             Player2.y = 690;
         }
-        
 
+        void KeyboardHandler(Players Player2, GameTime gameTime) //кнопки и некторые условия
+        {
+            var keyboardState = Keyboard.GetState();
+            if (keyboardState.IsKeyDown(Keys.A))
+            {
+                Player2.x -= playerSpeedX * gameTime.ElapsedGameTime.Milliseconds / 1000f;
+                ballCast = -1;
+            }
+            if (keyboardState.IsKeyDown(Keys.D))
+            {
+                Player2.x += playerSpeedX * gameTime.ElapsedGameTime.Milliseconds / 1000f;
+                ballCast = 1;
+            }
+
+            if (keyboardState.IsKeyDown(Keys.F))
+            {
+                if (!BallRun)
+                {
+                    Ball.firstx = Player2.x;
+                    Ball.y = Player2.y;
+                    BallRun = true;
+                    Ball.dX = ballCast * ballSpeedX;
+                }
+            }
+
+            if (Math.Abs(Ball.firstx - Ball.x) > 400 || !BallRun)
+            {
+                BallRun = false;
+                Ball.x = Player2.x;
+                Ball.y = 1000;
+            }
+
+
+            if (Player2.y < 690)
+            {
+                Player2.dY += gravitySpeed * playerJumpY;
+            }
+            if (keyboardState.IsKeyDown(Keys.Space))
+            {
+
+                if (!spaceDown && Player2.y >= screenHeight * HITBOXSCALE - 1) { spaceDown = true; Player2.dY = -playerJumpY; }
+
+
+            }
+
+            else { spaceDown = false; if (Player2.y < 550) { Player2.dY = playerJumpY; } }
+
+
+            if (Player2.y != 690) { spaceDown = true; }
+            if (Player2.y == 691) { spaceDown = false; Player2.dY = 0; }
+
+
+            if (keyboardState.IsKeyDown(Keys.Left)) Player2.dX = -playerSpeedX;
+            else if (keyboardState.IsKeyDown(Keys.Right)) Player2.dX = playerSpeedX;
+            else Player2.dX = 0;
+
+            if (Player2.y > 690)
+            {
+                Player2.dY = 0;
+                Player2.y = 690;
+            }
+
+            if (Player2.x > screenWidth)
+            {
+                Player2.x = screenWidth - 60;
+                Player2.dX = 0;
+            }
+            if (Player2.x < 0)
+            {
+                Player2.x = 60;
+                Player2.dX = 0;
+            }
+        }
     }
 }
