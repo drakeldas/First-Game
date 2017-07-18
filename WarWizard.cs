@@ -52,6 +52,7 @@ namespace WarWizard2D
         SpriteFont stateFont;
         int screenWidth = 1500;
         int screenHeight = 900;
+
         public WarWizard2D()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -62,7 +63,6 @@ namespace WarWizard2D
 
         protected override void Initialize()
         {
-
             this.IsMouseVisible = true;
             this.spaceDown = false;
             this.gameStarted = false;
@@ -103,7 +103,6 @@ namespace WarWizard2D
             stateFont = Content.Load<SpriteFont>("GameState");
             MediaPlayer.Play(intro);
 
-
             Mob1.Firstx = this.screenWidth + 600; ;
             Mob1.Firsty = 605;
             Mob1.X = 1300;
@@ -133,7 +132,6 @@ namespace WarWizard2D
                 Player2.Exp = 0; Player2.Lvl++; lvlup.Play(); Mob2.dX += this.MobSpeed / 5; Mob1.dX += this.MobSpeed / 5; this.damage += Player2.Lvl * 5;
             }
             if (Player2.Exp > 10 * Player2.Lvl) { Player2.Exp = 0; }
-
 
             float elapsedTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
             var keyboardState = Keyboard.GetState();
@@ -185,9 +183,7 @@ namespace WarWizard2D
             if (Player2.RectangleCollision(Mob2) && !this.Lifmob) { this.gameOver = true; }
 
             base.Update(gameTime);
-
         }
-
 
         protected override void Draw(GameTime gameTime)
         {
@@ -277,12 +273,11 @@ namespace WarWizard2D
                 { this.highscore = this.score; }
             }
 
-
             //начальная заставка
             if (!this.gameStarted)
             {
                 spriteBatch.Draw(startGameSplash, new Rectangle(0, 0, (int)screenWidth, (int)screenHeight), Color.White);
-                String title = "First-Game 2D";
+                String title = "War Wizard 2D";
                 String pressSpace = "Press Space to start";
                 Vector2 titleSize = stateFont.MeasureString(title);
                 Vector2 pressSpaceSize = stateFont.MeasureString(pressSpace);
@@ -302,7 +297,6 @@ namespace WarWizard2D
                 spriteBatch.DrawString(stateFont, titleScore, new Vector2(1125, 0), Color.Red, 0f, Vector2.Zero, 0.5f, SpriteEffects.None, 1f);
                 spriteBatch.DrawString(stateFont, titleHighS, new Vector2(1125, 50), Color.Red, 0f, Vector2.Zero, 0.5f, SpriteEffects.None, 1f);
             }
-
 
             spriteBatch.End();
             base.Draw(gameTime);

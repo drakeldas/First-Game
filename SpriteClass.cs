@@ -53,6 +53,5 @@ namespace WarWizard2D
         
         public override Texture2D Texture { get; set;}
         
-
     }
 }
