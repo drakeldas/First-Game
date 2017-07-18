@@ -11,8 +11,7 @@ namespace WarWizard2D
     {
         
         const float HITBOXSCALE = .5f;
-        private bool Pass = false;
-
+        
         public Mobs(GraphicsDevice graphicsDevice, string textureName, float scale)
         {
             this.Scale = scale;
@@ -24,19 +23,12 @@ namespace WarWizard2D
                 }
             }
         }
-
-        public void Update(float elapsedTime, Sprite player)
-        {
-            if ((player.X - this.X - this.Texture.Width * this.Scale * HITBOXSCALE / 2) < 0) { this.X -= this.Dx * elapsedTime; }
-            if ((player.X - this.X + this.Texture.Width * this.Scale * HITBOXSCALE / 2) > 0) { this.X += this.Dx * elapsedTime; }
-        }
-
         public void Update(float elapsedTime, Players player)
         {
             if (this.X < -50) { this.X = -50; }
             if (this.X > 1550) { this.X = 1550; }
-            if ((player.X - this.X - this.Texture.Width * this.Scale * HITBOXSCALE / 2) < 0) { this.X -= this.Dx * elapsedTime; }
-            if ((player.X - this.X + this.Texture.Width * this.Scale * HITBOXSCALE / 2) > 0) { this.X += this.Dx * elapsedTime; }
+            if ((player.X - this.X - this.Texture.Width * this.Scale * HITBOXSCALE / 2) < 0) { this.X -= this.dX * elapsedTime; }
+            if ((player.X - this.X + this.Texture.Width * this.Scale * HITBOXSCALE / 2) > 0) { this.X += this.dX * elapsedTime; }
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -53,7 +45,6 @@ namespace WarWizard2D
                 spriteBatch.Draw(Texture, spritePosition, FramMob, Color.White, this.Angle, new Vector2(Texture.Width / 2, Texture.Height / 2), new Vector2(Scale, Scale), SpriteEffects.None, 0f);
             }
         }
-
         public bool RectangleCollision(Sprite otherSprite)
         {
             if (this.X + this.Texture.Width * this.Scale * HITBOXSCALE / 2 < otherSprite.X - otherSprite.Texture.Width * otherSprite.Scale / 2) return false;
@@ -62,9 +53,8 @@ namespace WarWizard2D
             if (this.Y - this.Texture.Height * this.Scale * HITBOXSCALE / 2 > otherSprite.Y + otherSprite.Texture.Height * otherSprite.Scale / 2) return false;
             return true;
         }
-
         public bool RectangleCollision(Players otherSprite)
-        { 
+        {
             if (this.X + this.Texture.Width * this.Scale * HITBOXSCALE / 2 < otherSprite.X - otherSprite.Texture.Width * otherSprite.Scale / 2) return false;
             if (this.Y + this.Texture.Height * this.Scale * HITBOXSCALE / 2 < otherSprite.Y - otherSprite.Texture.Height * otherSprite.Scale / 2) return false;
             if (this.X - this.Texture.Width * this.Scale * HITBOXSCALE / 2 > otherSprite.X + otherSprite.Texture.Width * otherSprite.Scale / 2) return false;
@@ -72,33 +62,20 @@ namespace WarWizard2D
             return true;
         }
 
-        public Texture2D Texture { get; set; }
-        
-        public float X { get; set; }
-
-        public float Y { get; set; }
-
-        public float FirstX { get; set; }
-
-        public float FirstY { get; set; }
-
-        public float Angle { get; set; }
-
-        public float Dx { get; set; }
-
-        public float Dy { get; set; }
-
-        public float Da { get; set; }
-
-        public float Scale { get; set; }
-
-        public int FramX { get; set; }
-
-        public int FramY { get; set; }
-
-        public int FramDx { get; set; }
-
-        public int FramDy { get; set;}
+        public Texture2D Texture { get;set;}
+        public float X { get;set;}
+        public float Y { get;set;}
+        public float Firstx { get;set;}
+        public float Firsty { get;set;}
+        public float Angle { get;set;}
+        public float dX { get;set;}
+        public float dY { get;set;}
+        public float dA { get;set;}
+        public float Scale { get;set;}
+        public int FramX { get;set;}
+        public int FramY { get;set;}
+        public int FramDx { get;set;}
+        public int FramDy { get;set;}
 
     }
 }

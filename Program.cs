@@ -14,7 +14,7 @@ namespace WarWizard2D
         [STAThread]
         static void Main()
         {
-            using (var game = new Game1())
+            using (var game = new WarWizard2D())
                 game.Run();
         }
     }

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>C:/Users/Днс/Documents/First-Game/Content/retry.mp3</SourceFile>
-  <SourceTime>2017-07-13T17:13:46.4932757+04:00</SourceTime>
-  <DestFile>C:/Users/Днс/Documents/First-Game/Content/bin/Windows/retry.xnb</DestFile>
-  <DestTime>2017-07-18T22:20:26.3113831+04:00</DestTime>
+  <SourceFile>E:/prodject/Game1/Game1/Content/retry.mp3</SourceFile>
+  <SourceTime>2017-07-14T12:27:52+03:00</SourceTime>
+  <DestFile>E:/prodject/Game1/Game1/Content/bin/Windows/retry.xnb</DestFile>
+  <DestTime>2017-07-18T21:34:59.9341263+03:00</DestTime>
   <Importer>Mp3Importer</Importer>
-  <ImporterTime>2017-03-01T19:05:36+04:00</ImporterTime>
+  <ImporterTime>2017-03-01T18:05:36+03:00</ImporterTime>
   <Processor>SoundEffectProcessor</Processor>
-  <ProcessorTime>2017-03-01T19:05:36+04:00</ProcessorTime>
+  <ProcessorTime>2017-03-01T18:05:36+03:00</ProcessorTime>
   <Parameters>
     <Key>Quality</Key>
     <Value>Best</Value>
