@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <SourceFile>C:/Users/Днс/Documents/First-Game/Content/fireball.png</SourceFile>
-  <SourceTime>2017-07-14T20:09:05.1065019+04:00</SourceTime>
+  <SourceTime>2017-07-18T16:51:50.6126997+04:00</SourceTime>
   <DestFile>C:/Users/Днс/Documents/First-Game/Content/bin/Windows/fireball.xnb</DestFile>
-  <DestTime>2017-07-14T22:21:08.2810605+04:00</DestTime>
+  <DestTime>2017-07-18T22:20:26.7776436+04:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2017-03-01T19:05:36+04:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

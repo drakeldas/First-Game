@@ -5,150 +5,89 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Game1
+namespace WarWizard2D
 {
-    class Players
+    public class Players
     {
         const float HITBOXSCALE = .5f;
-        bool pass = false;
+        private bool Pass = false;
+
         public Players(GraphicsDevice graphicsDevice, string textureName, float scale)
         {
-            this.scale = scale;
-            if (texture == null)
+            this.Scale = scale;
+            if (Texture == null)
             {
                 using (var stream = TitleContainer.OpenStream(textureName))
                 {
-                    texture = Texture2D.FromStream(graphicsDevice, stream);
+                    this.Texture = Texture2D.FromStream(graphicsDevice, stream);
                 }
             }
         }
+
         public void Update(float elapsedTime)
         {
-            this.x += this.dX * elapsedTime;
-            this.y += this.dY * elapsedTime;
-            this.angle += this.dA * elapsedTime;
-
-
+            this.X += this.Dx * elapsedTime;
+            this.Y += this.Dy * elapsedTime;
+            this.Angle += this.Da * elapsedTime;
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            Vector2 spritePosition = new Vector2(this.x, this.y);
+            Vector2 spritePosition = new Vector2(this.X, this.Y);
 
-            if (this.framDx == 0 || this.framDy == 0)
+            if (this.FramDx == 0 || this.FramDy == 0)
             {
-                spriteBatch.Draw(texture, spritePosition, null, Color.White, this.angle, new Vector2(texture.Width / 2, texture.Height / 2), new Vector2(scale, scale), SpriteEffects.None, 0f);
+                spriteBatch.Draw(Texture, spritePosition, null, Color.White, this.Angle, new Vector2(Texture.Width / 2, Texture.Height / 2), new Vector2(Scale, Scale), SpriteEffects.None, 0f);
             }
             else
             {
-                var FramMob = new Rectangle(this.framX, this.framY, this.framDx, this.framDy);
-                spriteBatch.Draw(texture, spritePosition, FramMob, Color.White, this.angle, new Vector2(texture.Width / 2, texture.Height / 2), new Vector2(scale, scale), SpriteEffects.None, 0f);
+                var FramMob = new Rectangle(this.FramX, this.FramY, this.FramDx, this.FramDy);
+                spriteBatch.Draw(Texture, spritePosition, FramMob, Color.White, this.Angle, new Vector2(Texture.Width / 2, Texture.Height / 2), new Vector2(Scale, Scale), SpriteEffects.None, 0f);
             }
         }
+
         public bool RectangleCollision(Mobs otherSprite)
         {
-            if (this.x  < otherSprite.x - otherSprite.texture.Width * otherSprite.scale / 3) return false;
-            if (this.y + this.texture.Height * this.scale * HITBOXSCALE / 2 < otherSprite.y - otherSprite.texture.Height * otherSprite.scale / 2) return false;
-            if (this.x  > otherSprite.x + otherSprite.texture.Width * otherSprite.scale / 3) return false;
-            if (this.y - this.texture.Height * this.scale * HITBOXSCALE / 2 > otherSprite.y + otherSprite.texture.Height * otherSprite.scale / 2) return false;
+            if (this.X  < otherSprite.X - otherSprite.Texture.Width * otherSprite.Scale / 3) return false;
+            if (this.Y + this.Texture.Height * this.Scale * HITBOXSCALE / 2 < otherSprite.Y - otherSprite.Texture.Height * otherSprite.Scale / 2) return false;
+            if (this.X  > otherSprite.X + otherSprite.Texture.Width * otherSprite.Scale / 3) return false;
+            if (this.Y - this.Texture.Height * this.Scale * HITBOXSCALE / 2 > otherSprite.Y + otherSprite.Texture.Height * otherSprite.Scale / 2) return false;
             return true;
         }
-        public Texture2D texture
-        {
-            get;
-            set;
-        }
-        public int lvl
-        {
-            get;
-            set;
-        }
-        public int exp
-        {
-            get;
-            set;
-        }
-        public int health
-        {
-            get;
-            set;
-        }
 
-        public float x
-        {
-            get;
-            set;
-        }
+        public Texture2D Texture { get; set; }
 
-        public float y
-        {
-            get;
-            set;
-        }
-        public float firstx
-        {
-            get;
-            set;
-        }
+        public int Lvl { get; set; }
 
-        public float firsty
-        {
-            get;
-            set;
-        }
+        public int Exp { get; set; }
 
-        public float angle
-        {
-            get;
-            set;
-        }
+        public int Health { get; set; }
 
-        public float dX
-        {
-            get;
-            set;
-        }
+        public float X { get; set; }
 
-        public float dY
-        {
-            get;
-            set;
-        }
+        public float Y { get; set; }
 
-        public float dA
-        {
-            get;
-            set;
-        }
+        public float FirstX { get; set; }
 
-        public float scale
-        {
-            get;
-            set;
-        }
+        public float FirstY { get; set; }
 
-        public int framX
-        {
-            get;
-            set;
-        }
+        public float Angle { get; set; }
 
-        public int framY
-        {
-            get;
-            set;
-        }
-        public int framDx
-        {
-            get;
-            set;
-        }
+        public float Dx { get; set; }
 
-        public int framDy
-        {
-            get;
-            set;
-        }
+        public float Dy { get; set; }
+
+        public float Da { get; set; }
+
+        public float Scale { get; set; }
+
+        public int FramX { get; set; }
+
+        public int FramY { get; set; }
+
+        public int FramDx { get; set; }
+
+        public int FramDy { get; set; }
 
     }
 }

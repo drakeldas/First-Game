@@ -9,7 +9,7 @@ using System.Text;
 using Microsoft.Xna.Framework.Media;
 using Microsoft.Xna.Framework.Audio;
 
-namespace Game1
+namespace WarWizard2D
 {
    
     public class Game1 : Game
@@ -64,19 +64,19 @@ namespace Game1
         {
             
             this.IsMouseVisible = true;
-            spaceDown = false;
-            gameStarted = false;
-            playerSpeedX = 800;
-            playerJumpY = 1200;
-            gravitySpeed = 0.05f;
-            ballSpeedX = 800;
-            gameOver = false;
-            BallRun = false;
-            Lifmob = true;
-            MobSpeed = 300;
-            score = 0;
-            highscore = 0;
-            damage = 30;
+            this.spaceDown = false;
+            this.gameStarted = false;
+            this.playerSpeedX = 800;
+            this.playerJumpY = 1200;
+            this.gravitySpeed = 0.05f;
+            this.ballSpeedX = 800;
+            this.gameOver = false;
+            this.BallRun = false;
+            this.Lifmob = true;
+            this.MobSpeed = 300;
+            this.score = 0;
+            this.highscore = 0;
+            this.damage = 30;
             base.Initialize();
         }
        
@@ -104,19 +104,19 @@ namespace Game1
             MediaPlayer.Play(intro);
 
             
-            Mob1.firstx = screenWidth+600; ;
-            Mob1.firsty = 605;
-            Mob1.x = 1300;
-            Mob1.y = 605;
-            Mob1.dX = MobSpeed;
-            Mob2.firstx = -600;
-            Mob2.firsty = 605;
-            Mob2.x = 0;
-            Mob2.y = 605;
-            Mob2.dX = MobSpeed;
-            Player2.lvl = 1;
-            Player2.health = 100 * Player2.lvl;
-            Player2.exp = 0;
+            Mob1.FirstX = screenWidth+600; ;
+            Mob1.FirstY = 605;
+            Mob1.X = 1300;
+            Mob1.Y = 605;
+            Mob1.Dx = MobSpeed;
+            Mob2.FirstX = -600;
+            Mob2.FirstY = 605;
+            Mob2.X = 0;
+            Mob2.Y = 605;
+            Mob2.Dx = MobSpeed;
+            Player2.Lvl = 1;
+            Player2.Health = 100 * Player2.Lvl;
+            Player2.Exp = 0;
         }
         protected override void UnloadContent()
         {
@@ -126,14 +126,14 @@ namespace Game1
         protected override void Update(GameTime gameTime)
         {
             //смена спрайтов с уровнем
-            if (Player2.lvl >= 2) { Ball.texture = Fire; }
-            if (Player2.lvl >= 3) { Player2.texture = Player_2; Player.texture = Player_1; Player.scale = 0.2f; Player2.scale = 0.2f; }
+            if (Player2.Lvl >= 2) { Ball.Texture = Fire; }
+            if (Player2.Lvl >= 3) { Player2.Texture = Player_2; Player.Texture = Player_1; Player.Scale = 0.2f; Player2.Scale = 0.2f; }
             //условие набора уровня
-            if (Player2.exp == 10 * Player2.lvl)
+            if (Player2.Exp == 10 * Player2.Lvl)
             {
-                Player2.exp = 0; Player2.lvl++; lvlup.Play(); Mob2.dX += MobSpeed / 5; Mob1.dX += MobSpeed / 5; damage += Player2.lvl * 5;
+                Player2.Exp = 0; Player2.Lvl++; lvlup.Play(); Mob2.Dx += MobSpeed / 5; Mob1.Dx += MobSpeed / 5; damage += Player2.Lvl * 5;
             }
-            if (Player2.exp > 10 * Player2.lvl) { Player2.exp = 0; }
+            if (Player2.Exp > 10 * Player2.Lvl) { Player2.Exp = 0; }
 
 
             float elapsedTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -157,15 +157,15 @@ namespace Game1
             if (gameOver && keyboardState.IsKeyDown(Keys.Enter))
             {
                 Lifmob = true;
-                Mob2.x = 0;
-                Mob1.x = screenWidth; ;
-                Mob1.dX = MobSpeed;
-                Mob2.dX = MobSpeed;
+                Mob2.X = 0;
+                Mob1.X = screenWidth; ;
+                Mob1.Dx = MobSpeed;
+                Mob2.Dx = MobSpeed;
                 Player2 = new Players(GraphicsDevice, "Content/player.png", 1);
                 Player = new Sprite(GraphicsDevice, "Content/player2.png", 1);
                 Ball = new Sprite(GraphicsDevice, "Content/redball.png", (float)0.2);
-                Player2.exp = 0;
-                Player2.lvl = 1;
+                Player2.Exp = 0;
+                Player2.Lvl = 1;
                 score = 0;
                 retry.Play();
                 StartGame();
@@ -194,7 +194,7 @@ namespace Game1
         }
             if (Player2.RectangleCollision(Mob1) && Lifmob) { gameOver = true; }
             if (Player2.RectangleCollision(Mob2) && !Lifmob) { gameOver = true; }
-            if (Player2.health < 0) { gameOver = true; Player2.health = 100 * Player2.lvl; }
+            if (Player2.Health < 0) { gameOver = true; Player2.Health = 100 * Player2.Lvl; }
             base.Update(gameTime);
             
         }
@@ -211,12 +211,12 @@ namespace Game1
             //отрисовка нижней платформы
             for (int i = 0; i < 8; i++)
             {
-                Tilemap.framX = 256;
-                Tilemap.framY = 0;
-                Tilemap.framDx = 256;
-                Tilemap.framDy = 256;
-                Tilemap.x = i * 256;
-                Tilemap.y = 920;
+                Tilemap.FramX = 256;
+                Tilemap.FramY = 0;
+                Tilemap.FramDx = 256;
+                Tilemap.FramDy = 256;
+                Tilemap.X = i * 256;
+                Tilemap.Y = 920;
                 Tilemap.Draw(spriteBatch);
             }
             //отрисовка персонажа
@@ -224,8 +224,8 @@ namespace Game1
             {
                 if (keyboardState.IsKeyDown(Keys.A) || ballCast == -1)
                 {
-                    Player.x = Player2.x;
-                    Player.y = Player2.y;
+                    Player.X = Player2.X;
+                    Player.Y = Player2.Y;
                     Player.Draw(spriteBatch);
                 }
                 else
@@ -235,15 +235,15 @@ namespace Game1
             }
             if (gameOver)
             {
-                Rip.x = Player2.x;
-                Rip.y = Player2.y;
+                Rip.X = Player2.X;
+                Rip.Y = Player2.Y;
                 Rip.Draw(spriteBatch);
                 String titleGameOver = "GAME OVER";
                 String titleAgain = "Press Enter to start again";
                 String titleExit = "Press Esc to exit";
                 BallRun = false;
-                Ball.dX = 0;
-                Ball.y = 1000;
+                Ball.Dx = 0;
+                Ball.Y = 1000;
                 spriteBatch.DrawString(stateFont, titleGameOver, new Vector2(500, 275), Color.Red, 0f, Vector2.Zero, 0.9f, SpriteEffects.None, 1f);
                 spriteBatch.DrawString(stateFont, titleAgain, new Vector2(575, 390), Color.Red, 0f, Vector2.Zero, 0.35f, SpriteEffects.None, 1f);
                 spriteBatch.DrawString(stateFont, titleExit, new Vector2(635, 425), Color.Red, 0f, Vector2.Zero, 0.35f, SpriteEffects.None, 1f);
@@ -258,7 +258,7 @@ namespace Game1
             //отрисовка мобов
             if (Lifmob)
             {
-                Mob2.x = Mob2.firstx;
+                Mob2.X = Mob2.FirstX;
                 Mob1.Draw(spriteBatch); 
             }
             if(Mob1.RectangleCollision(Ball))
@@ -266,7 +266,7 @@ namespace Game1
                 BallRun = false;
                 Lifmob = false;
                 shot.Play();
-                Player2.exp++;
+                Player2.Exp++;
                 score++;
                 if (score > highscore)
                 { highscore = score; }
@@ -274,7 +274,7 @@ namespace Game1
             }
             if (!Lifmob)
             {
-                Mob1.x = Mob1.firstx;
+                Mob1.X = Mob1.FirstX;
                 Mob2.Draw(spriteBatch);
             }
             if (Mob2.RectangleCollision(Ball))
@@ -282,7 +282,7 @@ namespace Game1
                 BallRun = false;
                 Lifmob = true;
                 shot.Play();
-                Player2.exp++;
+                Player2.Exp++;
                 score++;
                 if (score > highscore)
                 { highscore = score; }
@@ -295,7 +295,7 @@ namespace Game1
 
                 spriteBatch.Draw(startGameSplash, new Rectangle(0, 0, (int)screenWidth, (int)screenHeight), Color.White);
 
-                String title = "First-Game 2D";
+                String title = "War Wizard 2D";
                 String pressSpace = "Press Space to start";
 
 
@@ -309,7 +309,7 @@ namespace Game1
             if (gameStarted)
             {
 
-                String titleLevel= "Level "+Player2.lvl.ToString();
+                String titleLevel= "Level "+Player2.Lvl.ToString();
                 String titlePlay = "Press the button F to attack";
                 String titleScore = string.Format("Score: {0:D3}", score);
                 String titleHighS = string.Format("HighScore: {0:D3}", highscore);
@@ -327,8 +327,8 @@ namespace Game1
         
         public void StartGame()
         {
-            Player2.x = 30;
-            Player2.y = 690;
+            Player2.X = 30;
+            Player2.Y = 690;
         }
 
         void KeyboardHandler(Players Player2, GameTime gameTime) //кнопки и некторые условия
@@ -336,12 +336,12 @@ namespace Game1
             var keyboardState = Keyboard.GetState();
             if (keyboardState.IsKeyDown(Keys.A))
             {
-                Player2.x -= playerSpeedX * gameTime.ElapsedGameTime.Milliseconds / 1000f;
+                Player2.X -= playerSpeedX * gameTime.ElapsedGameTime.Milliseconds / 1000f;
                 ballCast = -1;
             }
             if (keyboardState.IsKeyDown(Keys.D))
             {
-                Player2.x += playerSpeedX * gameTime.ElapsedGameTime.Milliseconds / 1000f;
+                Player2.X += playerSpeedX * gameTime.ElapsedGameTime.Milliseconds / 1000f;
                 ballCast = 1;
             }
 
@@ -349,59 +349,59 @@ namespace Game1
             {
                 if (!BallRun)
                 {
-                    Ball.firstx = Player2.x;
-                    Ball.y = Player2.y;
+                    Ball.FirstX = Player2.X;
+                    Ball.Y = Player2.Y;
                     BallRun = true;
-                    Ball.dX = ballCast * ballSpeedX;
+                    Ball.Dx = ballCast * ballSpeedX;
                 }
             }
 
-            if (Math.Abs(Ball.firstx - Ball.x) > 400 || !BallRun)
+            if (Math.Abs(Ball.FirstX - Ball.X) > 400 || !BallRun)
             {
                 BallRun = false;
-                Ball.x = Player2.x;
-                Ball.y = 1000;
+                Ball.X = Player2.X;
+                Ball.Y = 1000;
             }
 
 
-            if (Player2.y < 690)
+            if (Player2.Y < 690)
             {
-                Player2.dY += gravitySpeed * playerJumpY;
+                Player2.Dy += gravitySpeed * playerJumpY;
             }
             if (keyboardState.IsKeyDown(Keys.Space))
             {
 
-                if (!spaceDown && Player2.y >= screenHeight * HITBOXSCALE - 1) { spaceDown = true; Player2.dY = -playerJumpY; }
+                if (!spaceDown && Player2.Y >= screenHeight * HITBOXSCALE - 1) { spaceDown = true; Player2.Dy = -playerJumpY; }
 
 
             }
 
-            else { spaceDown = false; if (Player2.y < 550) { Player2.dY = playerJumpY; } }
+            else { spaceDown = false; if (Player2.Y < 550) { Player2.Dy = playerJumpY; } }
 
 
-            if (Player2.y != 690) { spaceDown = true; }
-            if (Player2.y == 691) { spaceDown = false; Player2.dY = 0; }
+            if (Player2.Y != 690) { spaceDown = true; }
+            if (Player2.Y == 691) { spaceDown = false; Player2.Dy = 0; }
 
 
-            if (keyboardState.IsKeyDown(Keys.Left)) Player2.dX = -playerSpeedX;
-            else if (keyboardState.IsKeyDown(Keys.Right)) Player2.dX = playerSpeedX;
-            else Player2.dX = 0;
+            if (keyboardState.IsKeyDown(Keys.Left)) Player2.Dx = -playerSpeedX;
+            else if (keyboardState.IsKeyDown(Keys.Right)) Player2.Dx = playerSpeedX;
+            else Player2.Dx = 0;
 
-            if (Player2.y > 690)
+            if (Player2.Y > 690)
             {
-                Player2.dY = 0;
-                Player2.y = 690;
+                Player2.Dy = 0;
+                Player2.Y = 690;
             }
 
-            if (Player2.x > screenWidth)
+            if (Player2.X > screenWidth)
             {
-                Player2.x = screenWidth - 60;
-                Player2.dX = 0;
+                Player2.X = screenWidth - 60;
+                Player2.Dx = 0;
             }
-            if (Player2.x < 0)
+            if (Player2.X < 0)
             {
-                Player2.x = 60;
-                Player2.dX = 0;
+                Player2.X = 60;
+                Player2.Dx = 0;
             }
         }
     }
