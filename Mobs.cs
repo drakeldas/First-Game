@@ -23,13 +23,24 @@ namespace WarWizard2D
                 }
             }
         }
-        public void Update(float elapsedTime, Players player)
+
+        public void Update(float elapsedTime, object obj)
         {
-            if (this.X < -50) { this.X = -50; }
-            if (this.X > 1550) { this.X = 1550; }
-            if ((player.X - this.X - this.Texture.Width * this.Scale * HITBOXSCALE / 2) < 0) { this.X -= this.dX * elapsedTime; }
-            if ((player.X - this.X + this.Texture.Width * this.Scale * HITBOXSCALE / 2) > 0) { this.X += this.dX * elapsedTime; }
+            switch (obj)
+            {
+                case Sprite player:
+                    if ((player.X - this.X - this.Texture.Width * this.Scale * HITBOXSCALE / 2) < 0) { this.X -= this.dX * elapsedTime; }
+                    if ((player.X - this.X + this.Texture.Width * this.Scale * HITBOXSCALE / 2) > 0) { this.X += this.dX * elapsedTime; }
+                    break;
+                case Players player:
+                    if (this.X < -50) { this.X = -50; }
+                    if (this.X > 1550) { this.X = 1550; }
+                    if ((player.X - this.X - this.Texture.Width * this.Scale * HITBOXSCALE / 2) < 0) { this.X -= this.dX * elapsedTime; }
+                    if ((player.X - this.X + this.Texture.Width * this.Scale * HITBOXSCALE / 2) > 0) { this.X += this.dX * elapsedTime; }
+                    break;
+            }
         }
+
 
         public void Draw(SpriteBatch spriteBatch)
         {
@@ -45,7 +56,7 @@ namespace WarWizard2D
                 spriteBatch.Draw(Texture, spritePosition, FramMob, Color.White, this.Angle, new Vector2(Texture.Width / 2, Texture.Height / 2), new Vector2(Scale, Scale), SpriteEffects.None, 0f);
             }
         }
-        public bool RectangleCollision(Sprite otherSprite)
+        /*public bool RectangleCollision(Sprite otherSprite)
         {
             if (this.X + this.Texture.Width * this.Scale * HITBOXSCALE / 2 < otherSprite.X - otherSprite.Texture.Width * otherSprite.Scale / 2) return false;
             if (this.Y + this.Texture.Height * this.Scale * HITBOXSCALE / 2 < otherSprite.Y - otherSprite.Texture.Height * otherSprite.Scale / 2) return false;
@@ -60,7 +71,30 @@ namespace WarWizard2D
             if (this.X - this.Texture.Width * this.Scale * HITBOXSCALE / 2 > otherSprite.X + otherSprite.Texture.Width * otherSprite.Scale / 2) return false;
             if (this.Y - this.Texture.Height * this.Scale * HITBOXSCALE / 2 > otherSprite.Y + otherSprite.Texture.Height * otherSprite.Scale / 2) return false;
             return true;
+        }*/
+
+        public bool RectangleCollision(object obj)
+        {
+            switch (obj)
+            {
+                case Sprite otherSprite:
+                    if (this.X + this.Texture.Width * this.Scale * HITBOXSCALE / 2 < otherSprite.X - otherSprite.Texture.Width * otherSprite.Scale / 2) return false;
+                    if (this.Y + this.Texture.Height * this.Scale * HITBOXSCALE / 2 < otherSprite.Y - otherSprite.Texture.Height * otherSprite.Scale / 2) return false;
+                    if (this.X - this.Texture.Width * this.Scale * HITBOXSCALE / 2 > otherSprite.X + otherSprite.Texture.Width * otherSprite.Scale / 2) return false;
+                    if (this.Y - this.Texture.Height * this.Scale * HITBOXSCALE / 2 > otherSprite.Y + otherSprite.Texture.Height * otherSprite.Scale / 2) return false;
+                    return true;
+                    break;
+
+                case Players otherSprite:
+                    if (this.X + this.Texture.Width * this.Scale * HITBOXSCALE / 2 < otherSprite.X - otherSprite.Texture.Width * otherSprite.Scale / 2) return false;
+                    if (this.Y + this.Texture.Height * this.Scale * HITBOXSCALE / 2 < otherSprite.Y - otherSprite.Texture.Height * otherSprite.Scale / 2) return false;
+                    if (this.X - this.Texture.Width * this.Scale * HITBOXSCALE / 2 > otherSprite.X + otherSprite.Texture.Width * otherSprite.Scale / 2) return false;
+                    if (this.Y - this.Texture.Height * this.Scale * HITBOXSCALE / 2 > otherSprite.Y + otherSprite.Texture.Height * otherSprite.Scale / 2) return false;
+                    return true;
+                    break;
+            }
         }
+
 
         public Texture2D Texture { get;set;}
         public float X { get;set;}
