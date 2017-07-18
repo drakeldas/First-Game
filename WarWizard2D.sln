@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26430.15
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Game1", "Game1.csproj", "{4803EB64-9F65-4BB7-86E4-01BCBFBED2F1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WarWizard2D", "WarWizard2D.csproj", "{4803EB64-9F65-4BB7-86E4-01BCBFBED2F1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

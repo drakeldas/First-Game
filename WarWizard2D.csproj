@@ -9,8 +9,8 @@
     <ProjectGuid>{4803EB64-9F65-4BB7-86E4-01BCBFBED2F1}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Game1</RootNamespace>
-    <AssemblyName>Game1</AssemblyName>
+    <RootNamespace>WarWizard2D</RootNamespace>
+    <AssemblyName>WarWizard2D</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MonoGamePlatform>Windows</MonoGamePlatform>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
