@@ -22,7 +22,7 @@ namespace WarWizard2D
                 }
             }
         }
-        public override void Update(float elapsedTime)
+        public void Update(float elapsedTime)
         {
             this.X += this.dX * elapsedTime;
             this.Y += this.dY * elapsedTime;
@@ -42,8 +42,9 @@ namespace WarWizard2D
                 spriteBatch.Draw(Texture, spritePosition, FramMob, Color.White, this.Angle, new Vector2(Texture.Width / 2, Texture.Height / 2), new Vector2(Scale, Scale), SpriteEffects.None, 0f);
             }
         }
-        public bool RectangleCollision(Mobs otherSprite)
+        public override bool RectangleCollision(SpriteAbstract otherSprite)
         {
+            
             if (this.X  < otherSprite.X - otherSprite.Texture.Width * otherSprite.Scale / 3) return false;
             if (this.Y + this.Texture.Height * this.Scale * HITBOXSCALE / 2 < otherSprite.Y - otherSprite.Texture.Height * otherSprite.Scale / 2) return false;
             if (this.X  > otherSprite.X + otherSprite.Texture.Width * otherSprite.Scale / 3) return false;

@@ -10,9 +10,10 @@ namespace WarWizard2D
 {
     public abstract class SpriteAbstract
     {
-        abstract public void Update(float elapsedTime);
+        
         abstract public void Draw(SpriteBatch spriteBatch);
         abstract public Texture2D Texture { get; set; }
+        abstract public bool RectangleCollision(SpriteAbstract otherSprite);
          public float X { get; set; }
          public float Y { get; set; }
          public float Firstx { get; set; }
